@@ -1,0 +1,78 @@
+.header{
+    background-color: #004085;
+    color: white;
+}
+
+.searchFrom{
+    padding: 0;
+}
+
+.container-fluid{
+    background: #eee url("img/clouds.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: white;
+    height: 400px;
+}
+
+h3{
+    padding: 2%;
+}
+
+.row{
+    width: 100%;
+}
+.week{
+    background-color: #e9ecef;
+    width: 70%;
+    height: 30%;
+}
+
+.weekDay1, .weekDay2, .weekDay3, .weekDay4, .weekDay5, .weekDay6, .weekDay7{
+    border-left: solid 1px whitesmoke;
+    border-right: solid 1px whitesmoke;
+    color: black;
+}
+
+.weekDayHeader{
+    padding-top: 10px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.weekDayTemp, .weekDayIcon{
+    padding: 0%;
+}
+
+.weekDayIcon img{
+    height: 50px;
+    width: 50px;
+}
+.dayTemp{
+    font-weight: bold;
+}
+
+.dayTemp p, .nightTemp p{
+    margin-bottom: 0;
+}
+
+.weekData, .weekHeading{
+    margin: 0;
+    padding: 0;
+}
+
+i{
+    width: 4px;
+    height: 4px;
+    color: black;
+}
+
+.hours{
+    overflow: scroll;
+    width: 90%;
+}
+
+.main{
+    background: white;
+}
