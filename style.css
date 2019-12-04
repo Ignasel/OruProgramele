@@ -73,6 +73,14 @@ i{
     width: 90%;
 }
 
+.hour{
+    border-left: solid 1px #6c757d;
+    border-right: solid 1px #6c757d;
+}
+.hour p{
+    color: black;
+}
+
 .main{
     background: white;
 }
