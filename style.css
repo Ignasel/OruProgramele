@@ -71,11 +71,16 @@ i{
 .hours{
     overflow-x: scroll;
     width: 90%;
+    height: 300px;
+    flex-wrap: nowrap;
 }
 
 .hour{
     border-left: solid 1px #6c757d;
     border-right: solid 1px #6c757d;
+    color: black;
+    height: auto;
+    width: 50px;
 }
 .hour p{
     color: black;
