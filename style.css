@@ -68,10 +68,9 @@ i{
     color: black;
 }
 
+
 .hours{
     overflow-x: scroll;
-    width: 90%;
-    height: 300px;
     flex-wrap: nowrap;
 }
 
@@ -80,8 +79,14 @@ i{
     border-left: solid 1px #6c757d;
     border-right: solid 1px #6c757d;
     color: black;
-    height: auto;
+    background-color: #b9bbbe;
 }
+
+.container .row{
+    margin-left: 0;
+    margin-right: 0;
+}
+
 .hour p{
     color: black;
 }
