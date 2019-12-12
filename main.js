@@ -14,9 +14,47 @@ const na - oro sąlygos nenustatytos. =
 const windArrow =
 */
 
-
-
-
+//------------------Visos galimos oro salygu ikonos-----------------------------//
+let weatherIcons = {
+    day:
+        {
+            clear: "wi-day-sunny",
+            isolatedClouds: "wi-day-sunny",
+            scatteredClouds: "wi-day-cloudy",
+            overcast:"wi-cloudy",
+            lightRain: "wi-day-sprinkle",
+            moderateRain: "wi-day-showers",
+            heavyRain: "wi-day-rain",
+            sleet: "wi-day-sleet",
+            lightSnow: "wi-day-snow",
+            moderateSnow: "wi-day-snow-wind",
+            heavySnow: "wi-day-snow-thunderstorm",
+            fog: "wi-day-fog"
+        },
+    night:
+        {
+            clear: "wi-night-clear",
+            isolatedClouds: "wi-night-alt-partly-cloudy",
+            scatteredClouds: "wi-night-alt-cloudy",
+            overcast: "wi-cloudy",
+            lightRain: "wi-night-alt-sprinkle",
+            moderateRain: "wi-night-alt-showers",
+            heavyRain: "wi-night-alt-rain",
+            sleet: "wi-night-alt-sleet",
+            lightSnow: "wi-night-alt-snow",
+            moderateSnow: "wi-night-alt-snow-wind",
+            heavySnow: "wi-night-alt-snow-thunderstorm",
+            fog: "wi-night-alt-fog"
+        },
+    other:
+        {
+            na: "wi-na",
+            degreeSymbol: "wi-degrees",
+            raindropSymbol: "wi-raindrops",
+            weatherIconClass: 'wi'
+        }
+};
+//----------------------pasiimu duomenis-----------------------//
 
 async function getData(city) {
     let url = 'https://api.meteo.lt/v1/places/' + city + '/forecasts/long-term';
@@ -27,8 +65,6 @@ async function getData(city) {
 
 async function showData() {
     const data = await getData('Kaunas');
-
-
     let initialTime = new Date(data['forecastTimestamps'][0]['forecastTimeUtc']);
     let day = initialTime.getDate();
     console.log(day)
@@ -59,6 +95,8 @@ async function showData() {
 
         //---------------Pridedu condition ikoną-- naudoti switch--------//
 
+        
+
 
 
         //--------------Pridedu laipsius-----------------//
@@ -70,6 +108,7 @@ async function showData() {
 
         //-------------------Kritulių kiekis--------------------------//
 
+
         let percipitation = document.createElement("div")
         whatHour.appendChild(percipitation)
         percipitation.className = "row howMuchRain"
@@ -79,13 +118,58 @@ async function showData() {
         let wind = document.createElement("div")
         whatHour.appendChild(wind)
         wind.className = "row windSpeed"
-        percipitation.innerText = data.forecastTimestamps[i].windSpeed +" m/s"
+        wind.innerText = data.forecastTimestamps[i].windSpeed +" m/s"
 
 
         //----------------------Vėjo kryptis-------------------------------//
+        let windDirection = document.createElement("div")
+        whatHour.appendChild(windDirection)
+        wind.className = "row windDirection"
+        let windDirIcon  = document.createElement("i")
+        windDirection.appendChild(windDirIcon)
+        let degree = data.forecastTimestamps[i].windDirection
+        windDirIcon.className = "wi wi-wind from-" +degree+ "-deg"
 
 
-        https://iconify.design/icon-sets/wi/wind-direction-s.html -- Erick flowers (Google)
+    }
+    
+    function weatherIcon() {
+
+            let icon = document.createElement('i');
+            let conditionCode = data.forecastTimestamps[i].conditionCode;
+
+
+            let timeOfDay = day ? weatherIcons.day : weatherIcons.night;
+            switch (conditionCode) {
+                case (conClear):
+                    return timeOfDay.clear;
+                case (conIsolatedClouds):
+                    return timeOfDay.isolatedClouds;
+                case (conScatteredClouds):
+                    return timeOfDay.scatteredClouds;
+                case (conOvercast):
+                    return timeOfDay.overcast;
+                case (conLightRain):
+                    return timeOfDay.lightRain;
+                case (conModerateRain):
+                    return timeOfDay.moderateRain;
+                case (conHeavyRain):
+                    return timeOfDay.heavyRain;
+                case (conSleet):
+                    return timeOfDay.sleet;
+                case (conLightSnow):
+                    return timeOfDay.lightSnow;
+                case (conModerateSnow):
+                    return timeOfDay.moderateSnow;
+                case (conHeavySnow):
+                    return timeOfDay.heavySnow;
+                case (conFog):
+                    return timeOfDay.fog;
+                default:
+                    return weatherIcons.other.na;
+            }
+        }
+
 
     }
 
