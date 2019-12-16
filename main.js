@@ -1,18 +1,3 @@
-/*const clear - giedra; =
-const isolated-clouds - mažai debesuota; =
-const scattered-clouds - debesuota su pragiedruliais; =
-const overcast - debesuota; =
-const light-rain - nedidelis lietus; =
-const moderate-rain - lietus; =
-const heavy-rain - smarkus lietus; =
-const sleet - šlapdriba; =
-const light-snow - nedidelis sniegas; =
-const moderate-snow - sniegas; =
-const heavy-snow - smarkus sniegas; =
-const fog - rūkas; =
-const na - oro sąlygos nenustatytos. =
-const windArrow =
-*/
 
 //------------------Visos galimos oro salygu ikonos-----------------------------//
 let weatherIcons = {
@@ -45,12 +30,16 @@ async function getData(city) {
     let url = 'https://api.meteo.lt/v1/places/' + city + '/forecasts/long-term';
     let response = await fetch(url);
     return await response.json();
+
 }
 
 
-async function showData() {
+
+async function showData(callback){
     const data = await getData('Kaunas');
+    Alldata = data['forecastTimestamps'];
     let initialTime = new Date(data['forecastTimestamps'][0]['forecastTimeUtc']);
+
 
     async function weatherIcon(conditionCode) {
         // let conditionCode = data.forecastTimestamps[i].conditionCode;
@@ -90,20 +79,20 @@ async function showData() {
 
 
     //--------------išsiivesti septynias dienas--------//
-    console.log(data['forecastTimestamps'].length)
-     let allWeatherData = [];
-     for (let i = 0; i<data['forecastTimestamps'].length; i++) {
-         let newHour = new Date(data.forecastTimestamps[i].forecastTimeUtc);
-         allWeatherData[i] = data.forecastTimestamps[i];
-         let day = newHour.getDate();
-         console.log(day);
-
-         // newHour.getDate() = day1
-
-
-
-
-     }
+    // console.log(data['forecastTimestamps'].length)
+    //  let allWeatherData = [];
+    //  for (let i = 0; i<data['forecastTimestamps'].length; i++) {
+    //      let newHour = new Date(data.forecastTimestamps[i].forecastTimeUtc);
+    //      allWeatherData[i] = data.forecastTimestamps[i];
+    //      let day = newHour.getDate();
+    //      console.log(day);
+    //
+    //      // newHour.getDate() = day1
+    //
+    //
+    //
+    //
+    //  }
 
 
 
@@ -124,7 +113,7 @@ async function showData() {
         whatHour.className = "col hour";
 
         //-------------------Pridedu valandas------//
-        let newHour = new Date(data.forecastTimestamps[i].forecastTimeUtc);
+        const newHour = new Date(data.forecastTimestamps[i].forecastTimeUtc);
         let time = document.createElement('div');
         whatHour.appendChild(time);
         time.className = 'row time';
@@ -175,6 +164,52 @@ async function showData() {
 
 
     }
+
+    function todayminmax() {
+        for (let i = 0; i < 7; i++) {
+
+
+            let todaydata = Alldata.filter(function (item) {
+                let currentDate = new Date();
+                let day = currentDate.getDate() + i;
+                let month = currentDate.getMonth() + 1;
+                let year = currentDate.getFullYear();
+                let formatd = year + "-" + month + "-" + day;
+                console.log(item.forecastTimeUtc)
+                return item.forecastTimeUtc.includes(formatd)
+
+            });
+
+            //------------išrenka didziausia tos dienos temperatura-------------//
+            const maxtemp = Math.max(...todaydata.map(o => o.airTemperature));
+            console.log(maxtemp)
+            //isrenka maziausia temp
+            const mintemp = Math.min(...todaydata.map(o => o.airTemperature));
+            console.log(mintemp)
+
+
+            //---------------------Kuriame savaitės pirmą dieną--------------//
+
+            const week = document.querySelector(".week")
+            let dayOfWeek = document.createElement("div")
+            week.appendChild(dayOfWeek)
+            dayOfWeek.className = "col weekDay1"
+            let headerOfDay = document.createElement("div")
+            headerOfDay.className = 'row justify-content-center weekDayHeader'
+            let dataOfDay = document.createElement("div")
+            let tempOfDay = document.createElement('P')
+            dayOfWeek.appendChild(headerOfDay)
+            dayOfWeek.appendChild(dataOfDay)
+            dataOfDay.appendChild(tempOfDay)
+            tempOfDay.innerText = 'naktis: ' + mintemp + 'diena: ' + maxtemp;
+
+        }
+    }
+    console.log(todayminmax());
+
+
+
 }
+
 
 showData()
